@@ -1,0 +1,31 @@
+services:
+  backend:
+    build:
+      context: ./backend # Carpeta del backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/mathquest
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./frontend # Carpeta del frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend:/app
+
+  mongo:
+    image: mongo:latest
+    container_name: mathquest-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
